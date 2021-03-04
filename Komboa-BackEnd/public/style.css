@@ -1,0 +1,47 @@
+body{
+    margin: auto;
+    background-color: rgb(21, 32,43);
+    background-image: '/public/Hous1.jpg';
+}
+h1 {
+    color: rgb(255, 255, 255);
+}
+.nav a ul{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+}
+.admin-forms{
+  margin: auto;
+    
+}
+.admin-form{
+    display: inline-block;
+    margin: 60px;
+    padding: 30px;
+    border: solid 3px rgb(179, 179, 179);
+    border-radius: 6%;
+}
+.admin-form label{
+    color: yellow;
+}
+
+.House-add{
+    margin: auto;
+    font-size: 22px;
+}
+.house form label{
+    color: yellow;
+}
+.Rentals img{
+    border-radius: 10%;
+    max-width: 250px;
+    display: inline;
+    transition: transform .2s;
+}
+.Rentals img:hover{
+  transform: translateY(6px);
+  cursor: pointer;
+  transform: scale(1);
+}

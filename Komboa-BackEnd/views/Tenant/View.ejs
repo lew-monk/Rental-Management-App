@@ -1,0 +1,18 @@
+<%- include('../Partials/Head.html') %>
+
+    <%- include('../Partials/nav.html') %>
+
+        <body>
+            <h1>This is the landing page</h1>
+
+            <p>Available Listings</p>
+            <h1>Uploaded Images</h1>
+            <div class="Rentals">
+                <% if (items.length> 0) { %>
+                    <% items.forEach(element=> { %>
+                        <a href="/house/<%=element._id %>"><img src=" data:item/<%=element.Image1.contentType%>;base64,
+                            <%= element.Image1.data.toString('base64') %>"" alt="">
+                                <% }) %></a>
+                    <% } %>
+            </div>
+        </body>

@@ -1,0 +1,35 @@
+<%- include('../Partials/Head.html') %>
+
+    <%- include('../Partials/nav.html') %>
+
+        <body>
+            <div class="House-add">
+                <h1>Here is where you add a listing</h1>
+                <div class="house">
+                    <form action="/admin" method="POST" id="add-house" enctype="multipart/form-data">
+                        <label> category </label>
+                        <p><select name="houseCategory" id="houses" form="add-house">
+                                <option value="oneBedroom">One Bedroom</option>
+                                <option value="twoBedroom">Two Bedroom</option>
+                                <option value="bed-sitter">Bed-sitter</option>
+                                <option value="servantsQuarters">Servant's Quarters</option>
+                            </select></p>
+                        <p><label> Image </label>
+                            <input type="file" name="propImage1" id="image" accept="image/*">
+                        </p>
+                        <p><label> Image 2 </label>
+                            <input type="file" name="propImage2" id="image" accept="image/*">
+                        </p>
+                        <p><label> Image 3 </label>
+                            <input type="file" name="propImage3" id="image" accept="image/*">
+                        </p>
+                        <label for=""> Price per Month (ksh)</label>
+                        <p><input type="number" name="price" id="price"></p>
+                        <label for=""> Contact </label>
+                        <p><input type="tel" name="contact" id="contact"></p>
+                        <p> <button type="submit"> Add</button></p>
+                    </form>
+                </div>
+            </div>
+
+        </body>

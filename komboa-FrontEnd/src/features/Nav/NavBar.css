@@ -1,0 +1,41 @@
+.nav{
+    display: flex;
+    justify-content: flex-end;
+    height: 50px;
+}
+.nav-list {
+    height: 25px;
+    margin-right: 0px;
+    border-right: 1px solid #aaa;
+    padding: 0 20px;
+}
+.links{
+    text-decoration: none;
+    color: #ccc;
+    font: 20px/1 Helvetica, Verdana, sans-serif;
+}
+.links:hover {
+    color: #666;
+  }
+.active{
+    font-weight: bold;
+    color: #018dc4;
+  }
+.texts{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgb(184, 182, 182);
+    font: 15px/1 Helvetica, Verdana, sans-serif;
+    color: #018dc4;
+    font-weight: bold;
+    padding-bottom: 0px;
+    text-transform: capitalize;
+    font-size: 25px;
+    margin-right: 30px;
+    
+}
+.nav-Account{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

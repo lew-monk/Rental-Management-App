@@ -1,0 +1,27 @@
+<%- include('../Partials/Head.html') %>
+
+    <%- include('../Partials/nav.html') %>
+
+        <body>
+            <h1>This is the landing page</h1>
+
+            <p>Available Listing</p>
+
+            <p style="color: yellow;">
+                <%= result.createdAt%>
+            </p>
+            <p style="color: yellow;">
+                <%= result.contact%>
+            </p>
+            <p style="color: yellow;">
+                <%= result.category%>
+            </p>
+            <p>
+                <img src=" data:item/<%=result.Image1.contentType%>;base64,
+                    <%= result.Image1.data.toString('base64') %>"" alt="">
+                <img src=" data:item/<%=result.Image2.contentType%>;base64,
+                <%= result.Image2.data.toString('base64') %>"" alt="">
+                    <img src=" data:item/<%=result.Image3.contentType%>;base64,
+                <%= result.Image3.data.toString('base64') %>"" alt="">
+            </p>
+        </body>
