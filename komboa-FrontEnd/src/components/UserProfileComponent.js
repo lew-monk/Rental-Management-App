@@ -197,6 +197,7 @@ const UserProfile = () => {
                       name="password"
                       id="password"
                       ref={register}
+                      required={false}
                     />
                     {errors.password && errors.password.message}
                   </div>

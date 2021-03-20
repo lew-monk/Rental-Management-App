@@ -56,6 +56,21 @@ const addListing = (req, res) => {
       listingGallery: [images()],
       postedBy: req.params.id,
       bookedBy: null,
+      billing: {
+        monthly: {
+          rent: 0,
+          water: 0,
+          electricity: 0,
+        },
+        entry: {
+          rent: req.body.Price,
+          deposit: req.body.Price,
+          water: 0,
+          electricity: 0,
+          other: 0,
+        },
+      },
+      rentedBy: null,
     };
 
     const objInstances = new Listing(obj);
@@ -77,7 +92,7 @@ const getListings = (req, res) => {
 const getDetails = (req, res) => {
   const { id } = req.params;
   const listing = Listing.findById(id)
-    .populate("bookedBy")
+    .populate(["bookedBy", "rentedBy"])
     .then((response) => res.send(response))
     .catch((err) => console.log(err.message));
 };
@@ -131,7 +146,7 @@ const removeBooking = (req, res) => {
         if (err) {
           console.log(err);
         }
-        res.send.Status(200);
+        res.send(200);
       }
     );
   } catch (error) {
@@ -163,11 +178,11 @@ const updateListing = (req, res) => {
     allFeatures.push(val);
   }
   const { id } = req.params;
+  console.log(req.body);
 
   try {
     Listing.findByIdAndUpdate(
       id,
-      { useFindAndModify: false },
 
       {
         listingDescription: req.body.Description,
@@ -190,10 +205,109 @@ const updateListing = (req, res) => {
         }
         res.send(doc._id);
       }
-    ).then((response) => console.log(response));
+    );
   } catch (error) {
     console.log(error.message);
   }
+};
+
+const getBooked = (req, res) => {
+  const { id } = req.params;
+  Listing.find({ bookedBy: id })
+    .then((response) => res.send(response))
+    .catch((err) => console.log(err.message));
+};
+
+const addMonthlyBilling = (req, res) => {
+  const { id } = req.params;
+
+  Listing.findByIdAndUpdate(
+    { _id: id },
+    {
+      $inc: {
+        "billing.monthly.rent": req.body.Rent,
+        "billing.monthly.water": req.body.Water,
+        "billing.monthly.electricity": req.body.Electricity,
+      },
+    },
+    { useFindAndModify: false },
+    (err, doc) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        // res.sendStatus(200);
+      }
+    }
+  );
+};
+const addEntryBilling = (req, res) => {
+  const { id } = req.params;
+
+  Listing.findByIdAndUpdate(
+    { _id: id },
+    {
+      $inc: {
+        "billing.entry.rent": req.body.Rent,
+        "billing.entry.water": req.body.Water,
+        "billing.entry.electricity": req.body.Electricity,
+        "billing.entry.other": req.body.Other,
+        "billing.entry.deposit": req.body.Deposit,
+      },
+    },
+    { useFindAndModify: false },
+    (err, doc) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        // res.sendStatus(200);
+      }
+    }
+  );
+};
+
+const getBilling = (req, res) => {
+  const { id } = req.params;
+
+  Listing.findById(id)
+    .then((doc) => {
+      res.send({ billing: doc.billing, date: doc.updatedAt });
+    })
+    .catch((err) => console.log(err.message));
+};
+
+const rentListing = (req, res) => {
+  const { id } = req.params;
+  Listing.findByIdAndUpdate(
+    id,
+    {
+      rentedBy: req.body.id,
+    },
+    (err, doc) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        // console.log(doc);
+        // res.sendStatus(200);
+      }
+    }
+  );
+};
+const endLease = (req, res) => {
+  const { id } = req.params;
+  Listing.findByIdAndUpdate(
+    id,
+    {
+      rentedBy: null,
+    },
+    (err, doc) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        // console.log(doc);
+        // res.sendStatus(200);
+      }
+    }
+  );
 };
 
 module.exports = {
@@ -205,4 +319,10 @@ module.exports = {
   deleteListing,
   removeBooking,
   updateListing,
+  getBooked,
+  addMonthlyBilling,
+  addEntryBilling,
+  getBilling,
+  rentListing,
+  endLease,
 };

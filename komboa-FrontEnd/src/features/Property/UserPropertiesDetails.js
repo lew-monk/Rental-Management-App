@@ -127,8 +127,7 @@ const UserPropertiesDetails = () => {
                           {details.propertyName}
                         </h5>
                         <p className="property--location">
-                          <i className="fa fa-map-marker"></i>Petersham town,
-                          Wardll St - Australia PA 6550
+                          <i className="fa fa-map-marker"></i>Nairobi - Kenya
                         </p>
                       </div>
                       <div className="pull-right">
@@ -249,27 +248,6 @@ const UserPropertiesDetails = () => {
                           <h2 className="heading--title">Location</h2>
                         </div>
                       </div>
-                      {/* <!-- .col-md-12 end --> */}
-                      <div className="col-xs-12 col-sm-12 col-md-12">
-                        <ul className="list-unstyled mb-20">
-                          <li>
-                            <span>Address:</span>1220 Petersham Town
-                          </li>
-                          <li>
-                            <span>City:</span>Sydney
-                          </li>
-                          <li>
-                            <span>Country:</span>Australia
-                          </li>
-                          <li>
-                            <span>State:</span>Newcastle
-                          </li>
-                          <li>
-                            <span>Zip/Postal code:</span>54330
-                          </li>
-                        </ul>
-                      </div>
-                      {/* <!-- .col-md-12 end --> */}
 
                       <div className="col-xs-12 col-sm-12 col-md-12">
                         <div
@@ -643,6 +621,14 @@ const UserPropertiesDetails = () => {
                             className="btn btn--primary btn--block"
                           >
                             Add Listing
+                          </Link>
+                        </div>
+                        <div className="form-group">
+                          <Link
+                            to={`/property-report/${id}`}
+                            className="btn btn--primary btn--block"
+                          >
+                            Property Report
                           </Link>
                         </div>
                       </form>

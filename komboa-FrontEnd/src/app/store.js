@@ -4,7 +4,7 @@ import {
   getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import adminReducer from "../features/Admin/adminSlice";
-import businessReducer from "../features/Property/PropertySlice";
+import propertySearchReducer from "../features/Property/PropertySlice";
 import propertyReducer from "../features/Property/PropertySlice2";
 import dropSlice from "../components/DropZone/dropslice";
 import mapSlice from "../components/Maps/MapsSlice";
@@ -27,7 +27,7 @@ const persistConfig = {
 
 const combined = combineReducers({
   admin: adminReducer,
-  business: businessReducer,
+  propertyFound: propertySearchReducer,
   drop: dropSlice,
   property: propertyReducer,
   maps: mapSlice,

@@ -1,52 +1,37 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-import axios from 'axios'
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
-    businessName: null,
-    businessID: null,
-    ownerId: null,
+  property: [],
+};
 
-}
-
-export const fetchBusiness = createAsyncThunk('business/fetchBusiness', async (payload, {dispatch, getState}) => {
-    const response = await axios.get('/business')
+export const fetchBusiness = createAsyncThunk(
+  "business/fetchBusiness",
+  async (payload, { dispatch, getState }) => {
+    const response = await axios.get("/business");
     // dispatch(regBus(response.data))
-    return response.data
+    return response.data;
+  }
+);
 
-})
-
-const businessSlice = createSlice({
-    name: 'business',
-    initialState,
-    reducers:{
-        regBus(state, action){
-            const business = {
-                businessName: action.payload.saveBusiness.businessName,
-                businessID: action.payload.saveBusiness._id,
-                ownerId: action.payload.saveBusiness.OwnerId
-            }
-            return {...state, business}
-        },
-        clearBussiness(){
-            return initialState
-        }
+const propertySearch = createSlice({
+  name: "property Type",
+  initialState,
+  reducers: {
+    regBus(state, action) {
+      state = { ...action.payload };
+      return state;
     },
-    extraReducers:{
-        [fetchBusiness.fulfilled]: (state, action) => {
-            state = {...action.payload}
-            return state
-        },
-        [fetchBusiness.pending]: (state, action) => {
-            state = action.meta.requestId
-        }
-    }
-})
+    clearBussiness() {
+      return initialState;
+    },
+  },
+});
 
-export const businessSelector = (state) => {
-    return state.persistedReducer.business
-}
+export const propertyFoundSelector = (state) => {
+  return state.persistedReducer.propertyFound;
+};
 
-export const {regBus, clearBussiness} = businessSlice.actions
+export const { regBus, clearBussiness } = propertySearch.actions;
 
-export default businessSlice.reducer
-
+export default propertySearch.reducer;

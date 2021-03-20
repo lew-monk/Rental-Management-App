@@ -52,21 +52,13 @@ const UserProperties = () => {
               <div className="edit--profile-area">
                 <ul className="edit--profile-links list-unstyled mb-0">
                   <li>
-                    <a href="user-profile.html" className="active">
+                    <Link to="/userprofile" className="active">
                       Edit Profile
-                    </a>
+                    </Link>
                   </li>
+
                   <li>
-                    <a href="social-profile.html">Social Profiles</a>
-                  </li>
-                  <li>
-                    <a href="my-properties.html">My Properties</a>
-                  </li>
-                  <li>
-                    <a href="favourite-properties.html">Favorite Properties</a>
-                  </li>
-                  <li>
-                    <a href="add-property.html">Add Property</a>
+                    <Link to="/addproperty">Add Property</Link>
                   </li>
                 </ul>
               </div>

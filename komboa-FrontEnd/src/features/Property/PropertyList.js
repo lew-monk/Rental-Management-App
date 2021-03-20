@@ -1,5 +1,5 @@
 import Footer from "../../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Counties from "../../variables/Counties";
 import { useEffect, useState } from "react";
 import { fetchProperty, imageSelector } from "../Property/PropertySlice2";
@@ -11,15 +11,34 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
+import { useForm } from "react-hook-form";
+import { regBus } from "../Property/PropertySlice";
 import Loading from "../../components/Loading";
+import axios from "axios";
 
 const key = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
 const PropertyList = () => {
   const [propertyInfo] = useState([]);
   const [markers, setMarkers] = useState(null);
+  const { register, handleSubmit } = useForm();
+  const history = useHistory();
   const dispatch = useDispatch();
   const image = useSelector(imageSelector);
+
+  const onSubmit = (data) => {
+    axios({
+      method: "post",
+      url: "/findproperty-name",
+      data,
+    })
+      .then((response) => {
+        dispatch(regBus(response.data));
+        console.log(response);
+        history.push("/search");
+      })
+      .catch((err) => console.log(err.message));
+  };
 
   useEffect(() => {
     dispatch(fetchProperty());
@@ -88,56 +107,27 @@ const PropertyList = () => {
           <div className="container">
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-12">
-                <form className="mb-0 ">
+                <form onSubmit={handleSubmit(onSubmit)} className="mb-0 ">
                   <div className="form-box ">
                     <div className="row">
-                      <div className="col-xs-12 col-sm-6 col-md-3">
+                      {/* <!-- .col-md-3 end --> */}
+                      <div className="col-xs-12 col-sm-6 col-md-9">
                         <div className="form-group">
                           <div className="select--box">
                             <i className="fa fa-angle-down"></i>
-                            <select name="select-location" id="select-location">
-                              {Counties.map((county) => {
-                                return (
-                                  <option key={county} value={county}>
-                                    {county}
-                                  </option>
-                                );
-                              })}
-                            </select>
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="title"
+                              id="property-title"
+                              ref={register}
+                              placeholder="Property Name"
+                            />
                           </div>
                         </div>
                       </div>
+                      {/* <!-- .col-md-3 end --> */}
 
-                      {/* <!-- .col-md-3 end --> */}
-                      <div className="col-xs-12 col-sm-6 col-md-3">
-                        <div className="form-group">
-                          <div className="select--box">
-                            <i className="fa fa-angle-down"></i>
-                            <select name="select-type" id="select-type">
-                              {Type.map((category) => {
-                                return (
-                                  <option key={category} value={category}>
-                                    {category}
-                                  </option>
-                                );
-                              })}
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      {/* <!-- .col-md-3 end --> */}
-                      <div className="col-xs-12 col-sm-6 col-md-3">
-                        <div className="form-group">
-                          <div className="select--box">
-                            <i className="fa fa-angle-down"></i>
-                            <select name="select-status" id="select-status">
-                              <option>Any Status</option>
-                              <option>For Rent</option>
-                              <option>For Sale</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
                       {/* <!-- .col-md-3 end --> */}
                       <div className="col-xs-12 col-sm-6 col-md-3">
                         <input
@@ -240,7 +230,15 @@ const PropertyList = () => {
                       return (
                         <li key={category}>
                           <Link to="#">
-                            {category} <span>(13)</span>
+                            {category}
+                            <span>
+                              {
+                                propertyInfo.filter(
+                                  (property) =>
+                                    property.propertyType === category
+                                ).length
+                              }
+                            </span>
                           </Link>
                         </li>
                       );
@@ -260,12 +258,27 @@ const PropertyList = () => {
                   <ul className="list-unstyled mb-0">
                     <li key="For Rent">
                       <Link to="#">
-                        For Rent <span>(25)</span>
+                        For Rent
+                        <span>
+                          {
+                            propertyInfo.filter(
+                              (property) => property.propertyStatus === "Rent"
+                            ).length
+                          }
+                        </span>
                       </Link>
                     </li>
                     <li key="For Sale">
                       <Link to="#">
-                        For Sale <span>(32)</span>
+                        For Sale{" "}
+                        <span>
+                          {
+                            propertyInfo.filter(
+                              (property) =>
+                                property.propertyStatus === "For Sale"
+                            ).length
+                          }
+                        </span>
                       </Link>
                     </li>
                   </ul>
@@ -302,11 +315,6 @@ const PropertyList = () => {
                   </div>
                 </div>
                 <div className="properties properties-list">
-                  {/* <!-- .col-md-12 end --> */}
-
-                  {/* <!-- .property item end -->
-                                
-                                <!-- .property-item #2 --> */}
                   <div className="col-xs-12 col-sm-12 col-md-12">
                     {propertyInfo.map((info) => {
                       return (
@@ -335,7 +343,7 @@ const PropertyList = () => {
                                   </Link>
                                 </h5>
                                 <p className="property--location">
-                                  127 Kent Street, Sydney, NSW 2000
+                                  Africa - Kenya
                                 </p>
                               </div>
                               {/* <!-- .property-info end --> */}

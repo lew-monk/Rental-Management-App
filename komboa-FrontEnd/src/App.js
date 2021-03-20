@@ -4,20 +4,25 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./index.css";
 import "./components/404.css";
 import Loading from "./components/Loading";
-import AddProperty from "./features/Property/AddProperty";
 import LandingPage from "./features/Landing/LandingPage";
+import AddProperty from "./features/Property/AddProperty";
 import PropertyList from "./features/Property/PropertyList";
+import PropertyDetails from "./features/Property/PropertyDetails";
+import UserPropertiesDetails from "./features/Property/UserPropertiesDetails";
+import EditProperty from "./features/Property/EditProperty";
 import AddListing from "./features/Property/AddListing";
 import NotFound from "./components/NotFound";
 import UserProfile from "./components/UserProfileComponent";
 import LogOut from "./components/LogOut";
-import PropertyDetails from "./features/Property/PropertyDetails";
 import NavBar from "./features/Nav/NavBar";
 import ListingDetails from "./features/Property/ListingDetails";
 import UserProperties from "./features/Property/UserProperties";
-import UserPropertiesDetails from "./features/Property/UserPropertiesDetails";
 import EditListing from "./features/Property/EditListing";
-import EditProperty from "./features/Property/EditProperty";
+import BookedProperties from "./features/Property/BookedProperties";
+import Billing from "./features/Property/AddBilling";
+import BillingDetails from "./features/Property/BillingInfo";
+import PropertyReports from "./features/Property/PropertyReport";
+import SearchResults from "./features/Property/SearchedProperties";
 
 // const LandingPage = lazy(() => import('./features/Landing/LandingPage'))
 // const AddProperty = lazy(() => import('./features/Property/AddProperty'))
@@ -46,6 +51,14 @@ function App() {
           <Route exact path="/listing/:id" component={ListingDetails} />
           <Route exact path="/logout" component={LogOut} />
           <Route exact path="/userproperty" component={UserProperties} />
+          <Route exact path="/bookings/:id" component={BookedProperties} />
+          <Route exact path="/add-billing/:id" component={Billing} />
+          <Route exact path="/billing-info/:id" component={BillingDetails} />
+          <Route
+            exact
+            path="/property-report/:id"
+            component={PropertyReports}
+          />
           <Route
             exact
             path="/user-property-details/:id"
@@ -53,6 +66,7 @@ function App() {
           />
           <Route exact path="/edit-listings/:id" component={EditListing} />
           <Route exact path="/edit-property/:id" component={EditProperty} />
+          <Route exact path="/search/" component={SearchResults} />
 
           <Route component={NotFound} />
         </Switch>

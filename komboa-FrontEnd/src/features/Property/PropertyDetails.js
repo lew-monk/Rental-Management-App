@@ -10,6 +10,7 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
+import Footer from "../../components/Footer";
 
 const key = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
@@ -26,7 +27,7 @@ const center = {
 const PropertyDetails = () => {
   const [details, setDetails] = useState();
   const [select, setSelect] = useState();
-  const [listings, setListings] = useState(null);
+  const [listings, setListings] = useState([]);
 
   const { id } = useParams();
 
@@ -34,7 +35,6 @@ const PropertyDetails = () => {
     axios
       .get(`/property/${id}`)
       .then((response) => {
-        console.log(response.data);
         setDetails(response.data);
       })
       .catch((err) => console.log(err.message));
@@ -98,8 +98,7 @@ const PropertyDetails = () => {
                           {details.propertyName}
                         </h5>
                         <p className="property--location">
-                          <i className="fa fa-map-marker"></i>Petersham town,
-                          Wardll St - Australia PA 6550
+                          <i className="fa fa-map-marker"></i>Africa - Kenya
                         </p>
                       </div>
                       {/* <div className="pull-right">
@@ -175,84 +174,7 @@ const PropertyDetails = () => {
                           <h2 className="heading--title">Description</h2>
                         </div>
                       </div>
-                      {/* <!-- feature-panel #1 --> */}
-                      {/* <div className="col-xs-6 col-sm-4 col-md-4">
-                                    <div className="feature-panel">
-                                        <div className="feature--img">
-                                            <img src="assets/images/property-single/features/1.png" alt="icon"/>
-                                        </div>
-                                        <div className="feature--content">
-                                            <h5>Area:</h5>
-                                            <p>1270 sq ft</p>
-                                        </div>
-                                    </div>
-                                </div> */}
-                      {/* <!-- feature-panel end -->
-                                <!-- feature-panel #2 --> */}
-                      {/* <div className="col-xs-6 col-sm-4 col-md-4">
-                                    <div className="feature-panel">
-                                        <div className="feature--img">
-                                            <img src="assets/images/property-single/features/2.png" alt="icon"/>
-                                        </div>
-                                        <div className="feature--content">
-                                            <h5>Beds:</h5>
-                                            <p>4 Bedrooms</p>
-                                        </div>
-                                    </div>
-                                </div> */}
-                      {/* <!-- feature-panel end -->
-                                <!-- feature-panel #3 --> */}
-                      {/* <div className="col-xs-6 col-sm-4 col-md-4">
-                                    <div className="feature-panel">
-                                        <div className="feature--img">
-                                            <img src="assets/images/property-single/features/3.png" alt="icon"/>
-                                        </div>
-                                        <div className="feature--content">
-                                            <h5>Baths:</h5>
-                                            <p>2 Bathrooms</p>
-                                        </div>
-                                    </div>
-                                </div> */}
-                      {/* <!-- feature-panel end -->
-                                <!-- feature-panel #4 --> */}
-                      {/* <div className="col-xs-6 col-sm-4 col-md-4">
-                                    <div className="feature-panel">
-                                        <div className="feature--img">
-                                            <img src="assets/images/property-single/features/4.png" alt="icon"/>
-                                        </div>
-                                        <div className="feature--content">
-                                            <h5>Rooms:</h5>
-                                            <p>6 Rooms</p>
-                                        </div>
-                                    </div>
-                                </div> */}
-                      {/* <!-- feature-panel end -->
-                                <!-- feature-panel #5 --> */}
-                      {/* <div className="col-xs-6 col-sm-4 col-md-4">
-                                    <div className="feature-panel">
-                                        <div className="feature--img">
-                                            <img src="assets/images/property-single/features/5.png" alt="icon"/>
-                                        </div>
-                                        <div className="feature--content">
-                                            <h5>Floors:</h5>
-                                            <p>3 Floors</p>
-                                        </div>
-                                    </div>
-                                </div> */}
-                      {/* <!-- feature-panel end -->
-                                <!-- feature-panel #6 --> */}
-                      {/* <div className="col-xs-6 col-sm-4 col-md-4">
-                                    <div className="feature-panel">
-                                        <div className="feature--img">
-                                            <img src="assets/images/property-single/features/6.png" alt="icon"/>
-                                        </div>
-                                        <div className="feature--content">
-                                            <h5>Garage:</h5>
-                                            <p>2 Garages</p>
-                                        </div>
-                                    </div>
-                                </div> */}
-                      {/* <!-- feature-panel end --> */}
+
                       <div className="col-xs-12 col-sm-12 col-md-12">
                         <div className="property--details">
                           <p>{details.propertyDescription}</p>
@@ -297,25 +219,7 @@ const PropertyDetails = () => {
                         </div>
                       </div>
                       {/* <!-- .col-md-12 end --> */}
-                      <div className="col-xs-12 col-sm-12 col-md-12">
-                        <ul className="list-unstyled mb-20">
-                          <li>
-                            <span>Address:</span>1220 Petersham Town
-                          </li>
-                          <li>
-                            <span>City:</span>Sydney
-                          </li>
-                          <li>
-                            <span>Country:</span>Australia
-                          </li>
-                          <li>
-                            <span>State:</span>Newcastle
-                          </li>
-                          <li>
-                            <span>Zip/Postal code:</span>54330
-                          </li>
-                        </ul>
-                      </div>
+
                       {/* <!-- .col-md-12 end --> */}
 
                       <div className="col-xs-12 col-sm-12 col-md-12">
@@ -686,8 +590,8 @@ const PropertyDetails = () => {
             </div>
             {/* <!-- .container --> */}
           </section>
-          {listings === null ? (
-            <p>No Listing Available</p>
+          {listings.length === 0 ? (
+            <h2 style={{ textAlign: "center" }}>No Listing Available</h2>
           ) : (
             <section
               id="properties-carousel"
@@ -807,6 +711,7 @@ const PropertyDetails = () => {
       ) : (
         <p>Loading</p>
       )}
+      <Footer />
     </div>
   );
 };

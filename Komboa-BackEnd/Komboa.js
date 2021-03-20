@@ -64,19 +64,16 @@ app.get(
   }
 );
 
-app.post("/admin", Property.houseUploads, Property.addProperty);
-
+//User Routes
 app.post("/register", Admin.image, Admin.registerAdmin);
-
 app.post("/register2", Admin2.registerAdmin2);
-
 app.post("/login", Admin2.adminLogin2);
-
 app.post("/refreshToken", Admin.refreshTokenAdmin);
 app.get("/business", Business.allBusinesses);
 app.put("/updateAdmin/:id", Admin2.updateAdmin);
 
 //Property Routes
+app.post("/admin", Property.houseUploads, Property.addProperty);
 app.get("/property/:id", Property2.propertyDetails);
 app.post("/add-business", upload, Property2.registerProperty2);
 app.put("/editproperty/:id", upload, Property2.editProperty);
@@ -84,6 +81,7 @@ app.get("/userproperty/:id", Property2.userProperty);
 app.delete("/deleteproperty/:id", Property2.deleteProperty);
 app.get("/tests", Property2.test);
 app.post("/findproperty", Property2.findProperty);
+app.post("/findproperty-name", Property2.findPropertyName);
 
 //Listing Routes
 
@@ -94,3 +92,9 @@ app.put("/booklisting/:id", Listing.bookListing);
 app.delete("/deletelisting/:id", Listing.deleteListing);
 app.put("/removebooking/:id", Listing.removeBooking);
 app.put("/updatelisting/:id", uploadListing, Listing.updateListing);
+app.get("/booked-listings/:id", Listing.getBooked);
+app.put("/add-billing-information/:id", Listing.addMonthlyBilling);
+app.put("/add-entry-billing-information/:id", Listing.addEntryBilling);
+app.get("/get-billing-information/:id", Listing.getBilling);
+app.put("/rent-listing/:id", Listing.rentListing);
+app.put("/end-lease/:id", Listing.endLease);

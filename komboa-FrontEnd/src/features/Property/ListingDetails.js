@@ -18,6 +18,7 @@ import Button from "@material-ui/core/Button";
 const ListingDetails = () => {
   const [details, setDetails] = useState();
   const [open, setOpen] = useState(false);
+  const [openRemove, setOpenRemove] = useState(false);
   const history = useHistory();
 
   const { id } = useParams();
@@ -53,6 +54,12 @@ const ListingDetails = () => {
 
   const handleCloseDialogue = () => {
     setOpen(false);
+  };
+  const handleOpenRemoveDialogue = () => {
+    setOpenRemove(true);
+  };
+  const handleCloseRemoveDialogue = () => {
+    setOpenRemove(false);
   };
 
   const handleDeleteProperty = () => {
@@ -94,7 +101,7 @@ const ListingDetails = () => {
                             <li>
                               <Link to="/">Home</Link>
                             </li>
-                            <li className="active">Single Property</li>
+                            <li className="active">Listing Details</li>
                           </ol>
                         </div>
                         <div className="clearfix"></div>
@@ -121,8 +128,8 @@ const ListingDetails = () => {
                               {details.listingType}
                             </h5>
                             <p className="property--location">
-                              <i className="fa fa-map-marker"></i>Petersham
-                              town, Wardll St - Australia PA 6550
+                              <i className="fa fa-map-marker"></i>Africa
+                              Nairobi, Kenya
                             </p>
                           </div>
                           <div className="pull-right">
@@ -342,19 +349,8 @@ const ListingDetails = () => {
                               );
                             })
                           )}
-                          {/* <!-- feature-item end -->
-                                <!-- feature-item #2 --> */}
-                          {/* <!-- feature-item end -->
-                                <!-- feature-item #3 --> */}
-                          {/* <!-- feature-item end --> */}
                         </div>
-                        {/* <!-- .row end --> */}
                       </div>
-                      {/* <!-- .property-single-features end --> */}
-
-                      {/* <!-- .property-single-location end --> */}
-
-                      {/* <!-- .property-single-design end --> */}
 
                       <div className="property-single-video inner-box">
                         <div className="row">
@@ -363,7 +359,6 @@ const ListingDetails = () => {
                               <h2 className="heading--title">Video</h2>
                             </div>
                           </div>
-                          {/* <!-- .col-md-12 end --> */}
                           <div className="col-xs-12 col-sm-12 col-md-12">
                             <div className="video--content text-center">
                               <div className="bg-section">
@@ -398,10 +393,6 @@ const ListingDetails = () => {
                     </div>
                     {/* <!-- .col-md-8 --> */}
                     <div className="col-xs-12 col-sm-12 col-md-4">
-                      {/* <!-- . widget request end -->
-
-                        <!-- widget featured property
-=============================--> */}
                       <div className="widget widget-featured-property">
                         <div className="widget--title">
                           <h5>Featured Properties</h5>
@@ -418,84 +409,8 @@ const ListingDetails = () => {
                             data-loop="true"
                             data-speed="800"
                           >
-                            {/* <!-- .property-item #1 --> */}
                             <div className="property-item">
-                              <div className="property--img">
-                                <img
-                                  src="assets/images/properties/13.jpg"
-                                  alt="property image"
-                                  className="img-responsive"
-                                />
-                                <span className="property--status">
-                                  For Rent
-                                </span>
-                              </div>
                               <div className="property--content">
-                                <div className="property--info">
-                                  <h5 className="property--title">
-                                    House in Chicago
-                                  </h5>
-                                  <p className="property--location">
-                                    1445 N State Pkwy, Chicago, IL 60610
-                                  </p>
-                                  <p className="property--price">
-                                    $1200<span className="time">month</span>
-                                  </p>
-                                </div>
-                                {/* <!-- .property-info end --> */}
-                              </div>
-                            </div>
-                            {/* <!-- .property item end -->
-                                    <!-- .property-item #2 --> */}
-                            <div className="property-item">
-                              <div className="property--img">
-                                <img
-                                  src="assets/images/properties/2.jpg"
-                                  alt="property image"
-                                  className="img-responsive"
-                                />
-                                <span className="property--status">
-                                  For Rent
-                                </span>
-                              </div>
-                              <div className="property--content">
-                                <div className="property--info">
-                                  <h5 className="property--title">
-                                    <a href="#">Villa in Oglesby Ave</a>
-                                  </h5>
-                                  <p className="property--location">
-                                    1035 Oglesby Ave, Chicago, IL 60617
-                                  </p>
-                                  <p className="property--price">
-                                    $130,000<span className="time">month</span>
-                                  </p>
-                                </div>
-                                {/* <!-- .property-info end --> */}
-                              </div>
-                            </div>
-                            {/* <!-- .property item end -->
-                                    <!-- .property-item #3 --> */}
-                            <div className="property-item">
-                              <div className="property--img">
-                                <img
-                                  src="assets/images/properties/3.jpg"
-                                  alt="property image"
-                                  className="img-responsive"
-                                />
-                                <span className="property--status">
-                                  For Sale
-                                </span>
-                              </div>
-                              <div className="property--content">
-                                <div className="property--info">
-                                  <h5 className="property--title">
-                                    <a href="#">Apartment in Long St.</a>
-                                  </h5>
-                                  <p className="property--location">
-                                    34 Long St, Jersey City, NJ 07305
-                                  </p>
-                                  <p className="property--price">$70,000</p>
-                                </div>
                                 {/* <!-- .property-info end --> */}
                               </div>
                             </div>
@@ -540,7 +455,7 @@ const ListingDetails = () => {
                             <li>
                               <Link to="/">Home</Link>
                             </li>
-                            <li className="active">Single Property</li>
+                            <li className="active">Listing Details</li>
                           </ol>
                         </div>
                         <div className="clearfix"></div>
@@ -567,8 +482,8 @@ const ListingDetails = () => {
                               {details.listingType}
                             </h5>
                             <p className="property--location">
-                              <i className="fa fa-map-marker"></i>Petersham
-                              town, Wardll St - Australia PA 6550
+                              <i className="fa fa-map-marker"></i>Africa
+                              Nairobi, Kenya
                             </p>
                           </div>
                           <div className="pull-right">
@@ -787,19 +702,9 @@ const ListingDetails = () => {
                               </div>
                             );
                           })}
-                          {/* <!-- feature-item end -->
-                                <!-- feature-item #2 --> */}
-                          {/* <!-- feature-item end -->
-                                <!-- feature-item #3 --> */}
-                          {/* <!-- feature-item end --> */}
                         </div>
                         {/* <!-- .row end --> */}
                       </div>
-                      {/* <!-- .property-single-features end --> */}
-
-                      {/* <!-- .property-single-location end --> */}
-
-                      {/* <!-- .property-single-design end --> */}
 
                       <div className="property-single-video inner-box">
                         <div className="row">
@@ -893,6 +798,40 @@ const ListingDetails = () => {
                             {/* <!-- .agent-social-links --> */}
                           </div>
                         </div>
+                        <div className="widget widget-property-agent">
+                          <div className="widget--title">
+                            <h5>Rented By</h5>
+                          </div>
+                          <div className="widget--content">
+                            <Link to="#">
+                              <div className="agent--info">
+                                <h5 className="agent--title">
+                                  {details.rentedBy
+                                    ? details.rentedBy.FullName
+                                    : "Listing not rented Yet"}
+                                </h5>
+                              </div>
+                            </Link>
+                            {/* <!-- .agent-profile-details end --> */}
+                            <div className="agent--contact">
+                              <ul className="list-unstyled">
+                                <li>
+                                  <i className="fa fa-phone"></i>
+                                  {details.postedBy.Contact ||
+                                    "No Contact Available"}
+                                </li>
+                                <li>
+                                  <i className="fa fa-envelope-o"></i>
+                                  {details.bookedBy
+                                    ? details.rentedBy.Email
+                                    : "No Email Available"}
+                                </li>
+                              </ul>
+                            </div>
+
+                            {/* <!-- .agent-social-links --> */}
+                          </div>
+                        </div>
 
                         <div className="widget widget-request">
                           <div className="widget--title">
@@ -951,14 +890,66 @@ const ListingDetails = () => {
                                 </Link>
                               </div>
                               <div className="form-group">
-                                <input
-                                  type="button"
-                                  value="Remove Booking"
-                                  name="submit"
+                                <Link
+                                  to={`/add-billing/${id}`}
                                   className="btn btn--primary btn--block"
-                                  onClick={handleRemoveBooking}
-                                />
+                                >
+                                  Add Billing
+                                </Link>
                               </div>
+                              {details.bookedBy === null ? (
+                                <div className="form-group">
+                                  <input
+                                    type="button"
+                                    value="Remove Booking"
+                                    name="submit"
+                                    className="btn btn--primary btn--block"
+                                    onClick={handleRemoveBooking}
+                                    disabled
+                                  />
+                                </div>
+                              ) : (
+                                <div className="form-group">
+                                  <input
+                                    type="button"
+                                    value="Remove Booking"
+                                    name="submit"
+                                    className="btn btn--primary btn--block"
+                                    onClick={handleOpenRemoveDialogue}
+                                  />
+                                  <Dialog
+                                    open={openRemove}
+                                    onClose={handleCloseRemoveDialogue}
+                                    aria-labelledby="alert-dialog-title"
+                                    aria-describedby="alert-dialog-description"
+                                  >
+                                    <DialogTitle id="alert-dialog-title">
+                                      {`Are you sure you want to remove booking from this listing?`}
+                                    </DialogTitle>
+                                    <DialogContent>
+                                      <DialogContentText id="alert-dialog-description">
+                                        Removing this booking is unreversable.
+                                        Please Refresh if the booking is removed
+                                      </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                      <Button
+                                        onClick={handleRemoveBooking}
+                                        color="primary"
+                                      >
+                                        Remove
+                                      </Button>
+                                      <Button
+                                        onClick={handleCloseRemoveDialogue}
+                                        color="primary"
+                                        autoFocus
+                                      >
+                                        Abort
+                                      </Button>
+                                    </DialogActions>
+                                  </Dialog>
+                                </div>
+                              )}
                             </form>
                           </div>
                         </div>

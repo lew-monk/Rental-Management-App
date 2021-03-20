@@ -1,21 +1,28 @@
 import NavBar from "../Nav/NavBar";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { regBus } from "../Property/PropertySlice";
 import Footer from "../../components/Footer";
 import Type from "../../variables/Type";
-import { useForm } from "react-hook-form";
 import axios from "axios";
 
 const LandingPage = () => {
   const { register, handleSubmit } = useForm();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const onSubmit = (data) => {
     axios({
-      method: "POST",
+      method: "post",
       url: "/findproperty",
-      data: data,
+      data,
     })
-      .then((response) => console.log(response))
+      .then((response) => {
+        dispatch(regBus(response.data));
+        history.push("/search");
+      })
       .catch((err) => console.log(err.message));
   };
 
@@ -34,20 +41,8 @@ const LandingPage = () => {
                   <form className="mb-0" onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-box search-properties">
                       <div className="row">
-                        <div className="col-xs-12 col-sm-6 col-md-3">
-                          <div className="form-group">
-                            <div className="select--box">
-                              <input
-                                className="form-control"
-                                name="name"
-                                ref={register}
-                                placeholder="Property Name"
-                              />
-                            </div>
-                          </div>
-                        </div>
                         {/* <!-- .col-md-3 end --> */}
-                        <div className="col-xs-12 col-sm-6 col-md-3">
+                        <div className="col-xs-12 col-sm-6 col-md-9">
                           <div className="form-group">
                             <div className="select--box">
                               <i className="fa fa-angle-down"></i>
@@ -57,7 +52,7 @@ const LandingPage = () => {
                                 ref={register}
                                 defaultValue={null}
                               >
-                                <option value>Type OF Property </option>
+                                <option>Type OF Property </option>
                                 {Type.map((type) => {
                                   return (
                                     <option value={type} key={type}>
@@ -70,23 +65,7 @@ const LandingPage = () => {
                           </div>
                         </div>
                         {/* <!-- .col-md-3 end --> */}
-                        <div className="col-xs-12 col-sm-6 col-md-3">
-                          <div className="form-group">
-                            <div className="select--box">
-                              <i className="fa fa-angle-down"></i>
-                              <select
-                                name="status"
-                                id="select-status"
-                                ref={register}
-                                defaultChecked={null}
-                              >
-                                <option value="">Any Status</option>
-                                <option value="Rent">For Rent</option>
-                                <option value="Sale">For Sale</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
+
                         {/* <!-- .col-md-3 end --> */}
                         <div className="col-xs-12 col-sm-6 col-md-3">
                           <input
@@ -308,123 +287,6 @@ const LandingPage = () => {
                 {/* <!-- .feature-panel end --> */}
               </div>
               {/* <!-- .col-md-4 end --> */}
-            </div>
-            {/* <!-- .row end --> */}
-          </div>
-          {/* <!-- .container end --> */}
-        </section>
-        <section id="city-property" className="city-property text-center pb-70">
-          <div className="container">
-            <div className="row">
-              <div className="col-xs-12 col-sm-12 col-md-12">
-                <div className="heading heading-2 text-center mb-70">
-                  <h2 className="heading--title">Property By City</h2>
-                  <p className="heading--desc">
-                    Duis aute irure dolor in reprehed in volupted velit esse
-                    dolore
-                  </p>
-                </div>
-                {/* <!-- .heading-title end --> */}
-              </div>
-              {/* <!-- .col-md-12 end --> */}
-            </div>
-            {/* <!-- .row end --> */}
-            <div className="row">
-              {/* <!-- City #1 --> */}
-              <div className="col-xs-12 col-sm-8 col-md-8">
-                <div className="property-city-item">
-                  <div className="property--city-img">
-                    <Link to="#">
-                      <img
-                        src="assets/images/properties/city/1.jpg"
-                        alt="city"
-                        className="img-responsive"
-                      />
-                      <div className="property--city-overlay">
-                        <div className="property--item-content">
-                          <h5 className="property--title">New York</h5>
-                          <p className="property--numbers">16 Properties</p>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                  {/* <!-- .property-city-img end --> */}
-                </div>
-                {/* <!-- . property-city-item end --> */}
-              </div>
-              {/* <!-- .col-md-8 end -->
-                    <!-- City #2 --> */}
-              <div className="col-xs-12 col-sm-4 col-md-4">
-                <div className="property-city-item">
-                  <div className="property--city-img">
-                    <Link to="#">
-                      <img
-                        src="assets/images/properties/city/2.jpg"
-                        alt="city"
-                        className="img-responsive"
-                      />
-                      <div className="property--city-overlay">
-                        <div className="property--item-content">
-                          <h5 className="property--title">Chicago</h5>
-                          <p className="property--numbers">14 Properties</p>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                  {/* <!-- .property-city-img end --> */}
-                </div>
-                {/* <!-- . property-city-item end --> */}
-              </div>
-              {/* <!-- .col-md-8 end --> */}
-            </div>
-            {/* <!-- .row end --> */}
-            <div className="row">
-              {/* <!-- City #3 --> */}
-              <div className="col-xs-12 col-sm-4 col-md-4">
-                <div className="property-city-item">
-                  <div className="property--city-img">
-                    <Link to="#">
-                      <img
-                        src="assets/images/properties/city/3.jpg"
-                        alt="city"
-                        className="img-responsive"
-                      />
-                      <div className="property--city-overlay">
-                        <div className="property--item-content">
-                          <h5 className="property--title">Manhatten</h5>
-                          <p className="property--numbers">18 Properties</p>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                  {/* <!-- .property-city-img end --> */}
-                </div>
-                {/* <!-- . property-city-item end --> */}
-              </div>
-              {/* <!-- .col-md-8 end -->
-                    <!-- City #4 --> */}
-              <div className="col-xs-12 col-sm-8 col-md-8">
-                <div className="property-city-item">
-                  <div className="property--city-img">
-                    <Link to="#">
-                      <img
-                        src="assets/images/properties/city/4.jpg"
-                        alt="city"
-                        className="img-responsive"
-                      />
-                      <div className="property--city-overlay">
-                        <div className="property--item-content">
-                          <h5 className="property--title">Los Angeles</h5>
-                          <p className="property--numbers">10 Properties</p>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                  {/* <!-- .property-city-img end --> */}
-                </div>
-                {/* <!-- . property-city-item end --> */}
-              </div>
-              {/* <!-- .col-md-8 end --> */}
             </div>
             {/* <!-- .row end --> */}
           </div>

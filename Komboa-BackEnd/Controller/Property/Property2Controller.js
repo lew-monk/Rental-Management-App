@@ -182,16 +182,19 @@ const editProperty = (req, res) => {
 };
 
 const findProperty = (req, res) => {
-  console.log(req.body);
   try {
-    Property.find()
-      .where("propertyName")
-      .equals(req.body.name)
-      .where("propertyType")
-      .equals(req.body.status)
-      .where("propertyStatus")
-      .equals(req.body.status)
-      .then((response) => res.send(response));
+    Property.find({ propertyType: req.body.type }).then((response) =>
+      res.send(response)
+    );
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+const findPropertyName = (req, res) => {
+  try {
+    Property.find({ propertyName: req.body.title }).then((response) =>
+      res.send(response)
+    );
   } catch (error) {
     console.log(error.message);
   }
@@ -206,4 +209,5 @@ module.exports = {
   deleteProperty,
   editProperty,
   findProperty,
+  findPropertyName,
 };

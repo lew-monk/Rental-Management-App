@@ -2,21 +2,18 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, signUp } from "../Admin/adminSlice";
-import Helmet from "react-helmet";
-import { authSelector, roleSelector } from "../Admin/adminSlice";
+import { authSelector, roleSelector, idSelector } from "../Admin/adminSlice";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 const NavBar = () => {
-  const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
-  const history = useHistory();
   const dispatch = useDispatch();
   const auth = useSelector(authSelector);
   const roles = useSelector(roleSelector);
+  const id = useSelector(idSelector);
 
   const schema = yup.object().shape({
     loginEmail: yup.string().email().required(),
@@ -28,7 +25,10 @@ const NavBar = () => {
     registerPassword: yup
       .string()
       .required()
-      .matches(/^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/),
+      .matches(
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+        "Password should Contain atleast: 8 characters and 1 uppercase letter"
+      ),
     fullName: yup.string().required(),
   });
 
@@ -167,11 +167,7 @@ const NavBar = () => {
                       <li>
                         <Link to="/userproperty">my properties</Link>
                       </li>
-                      <li>
-                        <a href="favourite-properties.html">
-                          favourite properties
-                        </a>
-                      </li>
+
                       {role === "propertyOwner" && (
                         <li>
                           <Link to="/addproperty">add property</Link>
@@ -179,9 +175,7 @@ const NavBar = () => {
                       )}
                     </ul>
                   </li>
-                  {/* <!-- li end -->
 
-                    <!-- Properties Menu--> */}
                   <li className="has-dropdown">
                     <Link
                       to="#"
@@ -322,9 +316,7 @@ const NavBar = () => {
                         </li>
                       )}
                       <li>
-                        <a href="favourite-properties.html">
-                          favourite properties
-                        </a>
+                        <Link to={`/bookings/${id}`}>Booked Properties</Link>
                       </li>
                     </ul>
                   </li>
@@ -450,43 +442,13 @@ const NavBar = () => {
                     </li>
                   </ul>
                 </li>
-                {/* <!-- li end -->
 
-                    <!-- Pages Menu--> */}
-
-                {/* <!-- Profile Menu-->  */}
-                {/* <!-- li end -->
-                  <li className="has-dropdown">
-                  <Link
-                    to="#"
-                    className="dropdown-toggle menu-item"
-                    data-toggle="dropdown"
-                  >
-                    Properties
-                  </Link>
-                  </li>
-                    <!-- Properties Menu--> */}
                 <li className="has-dropdown">
-                  <Link
-                    to="/propertylist"
-                    // className="dropdown-toggle menu-item"
-                    // data-toggle="dropdown"
-                  >
-                    Properties
-                  </Link>
+                  <Link to="/propertylist">Properties</Link>
                 </li>
-
-                {/* <li><a href="page-contact.html">contact</a></li> */}
               </ul>
               {/* <!-- Module Signup  --> */}
               <div className="module module-login pull-left">
-                {/* <a
-                  className="btn-popup"
-                  data-toggle="modal"
-                  data-target="#signupModule"
-                >
-                  Login
-                </a> */}
                 <div
                   className="modal register-login-modal fade"
                   tabIndex="-1"
@@ -562,9 +524,9 @@ const NavBar = () => {
                                     className="btn btn--primary btn--block"
                                     value="Sign In"
                                   />
-                                  <Link to="#" className="forget-password">
+                                  {/* <Link to="#" className="forget-password">
                                     Forget your password?
-                                  </Link>
+                                  </Link> */}
                                 </form>
                                 {/* <!-- form  end --> */}
                               </div>
