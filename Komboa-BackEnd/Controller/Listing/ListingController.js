@@ -3,6 +3,7 @@ const { Listing } = require("../../Models/Listing/ListingModel");
 const multer = require("multer");
 
 const fs = require("fs");
+const { response } = require("express");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -56,6 +57,32 @@ const addListing = (req, res) => {
       listingGallery: [images()],
       postedBy: req.params.id,
       bookedBy: null,
+      buying: {
+        deposit: {
+          amount: 0,
+          refNo: null,
+          confirmation: null,
+        },
+        installments: {
+          refNo: null,
+          confirmation: null,
+          amount: 0,
+        },
+      },
+      paidBills: {
+        entry: {
+          total: 0,
+          refNo: null,
+          confirmation: null,
+        },
+        monthly: {
+          rent: 0,
+          water: 0,
+          electricity: 0,
+          refNo: null,
+          confirmation: null,
+        },
+      },
       billing: {
         monthly: {
           rent: 0,
@@ -267,10 +294,11 @@ const addEntryBilling = (req, res) => {
 
 const getBilling = (req, res) => {
   const { id } = req.params;
-
+  console.log("reached");
   Listing.findById(id)
-    .then((doc) => {
-      res.send({ billing: doc.billing, date: doc.updatedAt });
+    .then((response) => {
+      res.send(response);
+      console.log(response);
     })
     .catch((err) => console.log(err.message));
 };
@@ -310,6 +338,167 @@ const endLease = (req, res) => {
   );
 };
 
+const addDeposit = (req, res) => {
+  const { id } = req.params;
+  console.log(req.body);
+
+  Listing.findByIdAndUpdate(
+    id,
+    {
+      "buying.deposit.amount": req.body.Deposit,
+      "buying.deposit.refNo": req.body.reference,
+      "buying.deposit.paidAt": new Date(),
+      "buying.deposit.confirmation": "Pending",
+    },
+    (err, doc) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        res.send(doc);
+      }
+    }
+  );
+};
+
+const addInstallment = (req, res) => {
+  const { id } = req.params;
+  const obj = {
+    amount: req.body.installment,
+    refNo: req.body.reference,
+    paidAt: new Date(),
+    confirmation: "Pending",
+  };
+
+  Listing.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        "buying.installments": obj,
+      },
+    },
+    (err, doc) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        res.send(doc);
+      }
+    }
+  );
+};
+
+const addMonthlyBill = (req, res) => {
+  const { id } = req.params;
+  const obj = {
+    amount: req.body.installment,
+    refNo: req.body.reference,
+    paidAt: new Date(),
+    confirmation: "Pending",
+  };
+
+  Listing.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        "buying.installments": obj,
+      },
+    },
+    (err, doc) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        res.send(doc);
+      }
+    }
+  );
+};
+
+const confirmPayment = (req, res) => {
+  const { id } = req.params;
+  Listing.updateOne(
+    { "buying.installments._id": req.body.id },
+    { $set: { "buying.installments.$.confirmation": "Confirmed" } },
+    (err, doc) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        console.log(doc);
+        res.sendStatus(200);
+      }
+    }
+  );
+};
+const confirmMonthlyPayment = (req, res) => {
+  const { id } = req.params;
+  console.log(req.body);
+  Listing.updateOne(
+    { "paidBills.monthly._id": req.body.id },
+    { $set: { "paidBills.monthly.$.confirmation": "Confirmed" } },
+    (err, doc) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        console.log(doc);
+        res.sendStatus(200);
+      }
+    }
+  );
+};
+
+const addEntryPayment = (req, res) => {
+  const { id } = req.params;
+  const rent = parseInt(req.body.Rent);
+  const deposit = parseInt(req.body.Deposit);
+  const water = parseInt(req.body.Water);
+  const electricity = parseInt(req.body.Electricity);
+
+  const total = rent + water + deposit + electricity;
+
+  Listing.findByIdAndUpdate(
+    id,
+    {
+      "paidBills.entry.total": total,
+      "paidBills.entry.refNo": req.body.reference,
+      "paidBills.entry.confirmation": "Pending",
+      paidAt: new Date(),
+    },
+    (err, doc) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        res.sendStatus(200);
+      }
+    }
+  );
+};
+
+const addMonthlyPayment = (req, res) => {
+  const { id } = req.params;
+  const obj = {
+    rent: req.body.Rent,
+    water: req.body.Water,
+    electricity: req.body.Electricity,
+    refNo: req.body.reference,
+    paidAt: new Date(),
+    confirmation: "Pending",
+  };
+  Listing.findByIdAndUpdate(id, { $push: { "paidBills.monthly": obj } })
+    .then((response) => res.sendStatus(200))
+    .catch((err) => console.log(err.message));
+};
+
+const confirmEntryPayment = (req, res) => {
+  const { id } = req.params;
+  Listing.findByIdAndUpdate(
+    id,
+    {
+      "paidBills.entry.confirmation": "Confirmed",
+    },
+    { useFindAndModify: false }
+  )
+    .then((response) => res.sendStatus(200))
+    .catch((err) => console.log(err.message));
+};
+
 module.exports = {
   addListing,
   uploadListing,
@@ -325,4 +514,11 @@ module.exports = {
   getBilling,
   rentListing,
   endLease,
+  addDeposit,
+  addInstallment,
+  confirmPayment,
+  addEntryPayment,
+  addMonthlyPayment,
+  confirmMonthlyPayment,
+  confirmEntryPayment,
 };

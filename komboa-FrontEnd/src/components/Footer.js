@@ -11,9 +11,7 @@ const Footer = () => {
         <div className="container">
           <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
-              <h3>
-                Join our professional team & agents to start selling your house
-              </h3>
+              <h3>Joining a community of tenants and property owners and</h3>
               <Link to="#" className="btn btn--primary">
                 Contact
               </Link>

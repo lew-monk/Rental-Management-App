@@ -23,6 +23,9 @@ import Billing from "./features/Property/AddBilling";
 import BillingDetails from "./features/Property/BillingInfo";
 import PropertyReports from "./features/Property/PropertyReport";
 import SearchResults from "./features/Property/SearchedProperties";
+import Installments from "./features/Property/Installments";
+import ConfirmPayment from "./features/Property/ConfirmPayment";
+import MonthlyInstallments from "./features/Property/MonthlyInstallments";
 
 // const LandingPage = lazy(() => import('./features/Landing/LandingPage'))
 // const AddProperty = lazy(() => import('./features/Property/AddProperty'))
@@ -54,6 +57,13 @@ function App() {
           <Route exact path="/bookings/:id" component={BookedProperties} />
           <Route exact path="/add-billing/:id" component={Billing} />
           <Route exact path="/billing-info/:id" component={BillingDetails} />
+          <Route exact path="/buying/:id" component={Installments} />
+          <Route exact path="/confirm-payment/:id" component={ConfirmPayment} />
+          <Route
+            exact
+            path="/add-monthly-installment/:id"
+            component={MonthlyInstallments}
+          />
           <Route
             exact
             path="/property-report/:id"

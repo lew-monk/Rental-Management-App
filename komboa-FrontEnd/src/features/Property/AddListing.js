@@ -202,7 +202,7 @@ const AddListing = () => {
                           className="form-control"
                           name="listing-area"
                           id="Area"
-                          placeholder="sq ft"
+                          placeholder="sq meters"
                           ref={register}
                         />
                       </div>
@@ -219,7 +219,7 @@ const AddListing = () => {
                           className="form-control"
                           name="listing-size"
                           id="Size"
-                          placeholder="sq ft"
+                          placeholder="sq meter"
                           ref={register}
                         />
                       </div>

@@ -123,11 +123,6 @@ const NavBar = () => {
                 </button>
                 <Link className="logo" to="/">
                   <img
-                    className="logo-light"
-                    src="/assets/images/logo/logo-light.png"
-                    alt="Land Logo"
-                  />
-                  <img
                     className="logo-dark"
                     src="/assets/images/logo/logo-dark.png"
                     alt="Land Logo"
@@ -266,11 +261,6 @@ const NavBar = () => {
                 </button>
                 <Link className="logo" to="/">
                   <img
-                    className="logo-light"
-                    src="/assets/images/logo/logo-light.png"
-                    alt="Land Logo"
-                  />
-                  <img
                     className="logo-dark"
                     src="/assets/images/logo/logo-dark.png"
                     alt="Land Logo"
@@ -406,11 +396,6 @@ const NavBar = () => {
               </button>
               <Link className="logo" to="/">
                 <img
-                  className="logo-light"
-                  src="/assets/images/logo/logo-light.png"
-                  alt="Land Logo"
-                />
-                <img
                   className="logo-dark"
                   src="/assets/images/logo/logo-dark.png"
                   alt="Land Logo"
@@ -480,15 +465,8 @@ const NavBar = () => {
                                   className="mb-0"
                                   onSubmit={handleSubmit(onLogin)}
                                 >
-                                  <Link
-                                    to="https://facebook.com"
-                                    className="btn btn--facebook btn--block"
-                                  >
-                                    <i className="fa fa-facebook-square"></i>
-                                    Login with Facebook
-                                  </Link>
                                   <div className="or-text">
-                                    <span>or</span>
+                                    <span></span>
                                   </div>
                                   <div className="form-group">
                                     <input
@@ -537,15 +515,8 @@ const NavBar = () => {
                                 className="mb-0"
                                 onSubmit={handleSubmit2(onSignup)}
                               >
-                                <Link
-                                  to="#"
-                                  className="btn btn--facebook btn--block"
-                                >
-                                  <i className="fa fa-facebook-square"></i>
-                                  Register with Facebook
-                                </Link>
                                 <div className="or-text">
-                                  <span>or</span>
+                                  <span></span>
                                 </div>
                                 <div className="form-group">
                                   <input
@@ -610,16 +581,7 @@ const NavBar = () => {
                                   )}
                                 </div>
                                 {/* <!-- .form-group end --> */}
-                                <div className="input-checkbox">
-                                  <label className="label-checkbox">
-                                    <span>
-                                      I agree with all{" "}
-                                      <Link to="#">Terms & Conditions</Link>
-                                    </span>
-                                    <input type="checkbox" ref={register2} />
-                                    <span className="check-indicator"></span>
-                                  </label>
-                                </div>
+
                                 <input
                                   type="submit"
                                   className="btn btn--primary btn--block"

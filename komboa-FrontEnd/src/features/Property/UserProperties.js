@@ -108,33 +108,10 @@ const UserProperties = () => {
                                 </Link>
                               </h5>
                               <p className="property--location">
-                                2003 Sheffield Ave, Anderson, IN 46011
+                                Africa Nairobi, Kenya
                               </p>
-                              <p className="property--price">$115,000</p>
+                              {/* <p className="property--price">$115,000</p> */}
                             </div>
-                            {/* <!-- .property-info end --> */}
-                            <div className="property--features">
-                              <ul>
-                                <li>
-                                  <span className="feature">Beds:</span>
-                                  <span className="feature-num">4</span>
-                                </li>
-                                <li>
-                                  <span className="feature">Baths:</span>
-                                  <span className="feature-num">2</span>
-                                </li>
-                                <li>
-                                  <span className="feature">Area:</span>
-                                  <span className="feature-num">
-                                    2500 sq ft
-                                  </span>
-                                </li>
-                              </ul>
-                              <a href="#" className="edit--btn">
-                                <i className="fa fa-edit"></i>Edit
-                              </a>
-                            </div>
-                            {/* <!-- .property-features end --> */}
                           </div>
                         </div>
                       );

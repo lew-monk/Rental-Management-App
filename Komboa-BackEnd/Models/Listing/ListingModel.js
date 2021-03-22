@@ -28,6 +28,40 @@ const listingSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",
     },
+    buying: {
+      deposit: {
+        amount: Number,
+        refNo: String,
+        confirmation: String,
+        paidAt: { type: Date, default: Date.now },
+      },
+      installments: [
+        {
+          amount: Number,
+          refNo: String,
+          paidAt: { type: Date, default: Date.now },
+          confirmation: String,
+        },
+      ],
+    },
+    paidBills: {
+      entry: {
+        total: Number,
+        refNo: String,
+        paidAt: { type: Date, default: Date.now },
+        confirmation: String,
+      },
+      monthly: [
+        {
+          rent: Number,
+          water: Number,
+          electricity: Number,
+          paidAt: { type: Date, default: Date.now },
+          confirmation: String,
+          refNo: String,
+        },
+      ],
+    },
     billing: {
       monthly: {
         rent: Number,

@@ -217,8 +217,7 @@ const LandingPage = () => {
                 <div className="heading heading-2 text-center mb-70">
                   <h2 className="heading--title">Simple Steps</h2>
                   <p className="heading--desc">
-                    Duis aute irure dolor in reprehed in volupted velit esse
-                    dolore
+                    Finding and Booking Property made easy
                   </p>
                 </div>
                 {/* <!-- .heading-title end --> */}
@@ -239,8 +238,8 @@ const LandingPage = () => {
                   <div className="feature--content">
                     <h3>Search For Real Estates</h3>
                     <p>
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eule pariate.
+                      On Komboa searching for properties has been made really
+                      easy
                     </p>
                   </div>
                 </div>
@@ -258,10 +257,7 @@ const LandingPage = () => {
                   </div>
                   <div className="feature--content">
                     <h3>Select Your Favorite</h3>
-                    <p>
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eule pariate.
-                    </p>
+                    <p>Just select your property and book it</p>
                   </div>
                 </div>
                 {/* <!-- .feature-panel end --> */}
@@ -279,8 +275,8 @@ const LandingPage = () => {
                   <div className="feature--content">
                     <h3>Take Your Key</h3>
                     <p>
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eule pariate.
+                      Once rented and communication made to relevant owners,
+                      Take the key away
                     </p>
                   </div>
                 </div>

@@ -1,87 +1,33 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import axios from "axios";
 
-const styles = StyleSheet.create({
-  page: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "#E4E4E4",
-    paddingTop: 35,
-    paddingBottom: 65,
-    paddingHorizontal: 35,
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-  header: {
-    textAlign: "center",
-    fontSize: "2rem",
-  },
-  body: {
-    paddingTop: 35,
-    paddingBottom: 65,
-    paddingHorizontal: 35,
-  },
-  image: {
-    margin: "1rem auto",
-  },
-  nav: {
-    borderBottom: "1px #6C7C8E50 solid",
-    flexDirection: "column",
-    marginTop: "3%",
-    width: "70%",
-    justifyContent: "center",
-  },
-  h2: {
-    textAlign: "center",
-    fontSize: "24px",
-  },
-  records: {
-    width: "70%",
-    display: "flex",
-    flexDirection: "column",
-    marginLeft: "20%",
-  },
-  record: {
-    padding: "2.5% 5%",
-  },
-  h3: {
-    textAlign: "left",
-    fontSize: "16px",
-    fontWeight: "bold",
-  },
-  h4: {
-    textAlign: "left",
-    fontSize: "16px",
-    fontWeight: "bold",
-    marginLeft: "20%",
-  },
-  h5: {
-    textAlign: "left",
-    fontSize: "16px",
-    fontWeight: "bold",
-    marginLeft: "17%",
-  },
-});
-
 const BillingDetails = () => {
-  const [info, setInfo] = useState();
+  const [details, setDetails] = useState([]);
   const { id } = useParams();
+
+  const paid = () => {
+    var paid = document.getElementById("paid").innerText;
+    console.log(paid);
+    return paid;
+  };
 
   useEffect(() => {
     axios({
       method: "get",
-      url: `/get-billing-information/${id}`,
+      url: `/billing-information/${id}`,
     })
-      .then((response) => {
-        setInfo(response.data);
-      })
+      .then((doc) => setDetails(doc.data))
       .catch((err) => console.log(err.message));
+
+    const script = document.createElement("script");
+    script.src = "../../variables/script.js";
+    script.async = true;
+    document.body.append("script");
+
+    return () => {
+      document.body.remove("script");
+    };
   }, [id]);
 
   return (
@@ -111,103 +57,250 @@ const BillingDetails = () => {
           </div>
         </div>
       </section>
+      {details.listingStatus === "Sale" && (
+        <div>
+          <div className="table-custom">
+            <table class="table">
+              <caption>
+                <h2>Deposit</h2>
+              </caption>
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Reference Number</th>
+                  <th scope="col">Confirmation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>
+                    {new Date(details.buying.deposit.paidAt).toLocaleString()}
+                  </td>
+                  <td>{details.buying.deposit.amount}</td>
+                  <td>{details.buying.deposit.refNo}</td>
+                  <td>{details.buying.deposit.confirmation}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="table-custom">
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Reference Number</th>
+                  <th scope="col">Confirmation</th>
+                </tr>
+              </thead>
+              <tbody>
+                {details.buying.installments.map((installment) => {
+                  return (
+                    <tr>
+                      <td>{new Date(installment.paidAt).toLocaleString()}</td>
+                      <td>{installment.amount}</td>
+                      <td>{installment.refNo}</td>
+                      <td>{installment.confirmation}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+              <caption>
+                <h2>Installments</h2>
+              </caption>
+            </table>
+          </div>
+          <div className="table-custom">
+            <table class="table">
+              <caption>
+                <h2>Break-Down</h2>
+              </caption>
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Payment Status</th>
+                  <th scope="col">Amount</th>
 
-      {info && (
-        <section className="pdf-view">
-          <Document>
-            <Page size="A4" style={styles.page}>
-              <Text style={styles.image}>
-                <img
-                  className="logo-dark"
-                  src="/assets/images/logo/logo-dark.png"
-                  alt="Land Logo"
-                />
-              </Text>
-              <Text style={styles.header}>
-                Monthly Billing Info as Of -{" "}
-                {new Date(info.date).toDateString()}
-              </Text>
-
-              <View style={styles.nav}>
-                <Text style={styles.h2}>Bills</Text>
-              </View>
-              <View style={styles.records}>
-                <View style={styles.record}>
-                  <Text style={styles.h3}>Rent - </Text>
-                  <Text style={styles.h4}>
-                    Ksh. {info.billing.monthly.rent}
-                  </Text>
-                </View>
-                <View style={styles.record}>
-                  <Text style={styles.h3}>Water -</Text>
-                  <Text style={styles.h4}>
-                    Ksh. {info.billing.monthly.water}
-                  </Text>
-                </View>
-                <View style={styles.record}>
-                  <Text style={styles.h3}>Electricity -</Text>
-                  <Text style={styles.h5}>
-                    Ksh. {info.billing.monthly.electricity}
-                  </Text>
-                </View>
-              </View>
-            </Page>
-          </Document>
-        </section>
+                  <th scope="col">Listing Price</th>
+                  <th scope="col">Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    {new Date(details.buying.deposit.paidAt).toLocaleString()}
+                  </td>
+                  <td>Total Confirmed</td>
+                  <td id="paid">
+                    {details.buying.installments
+                      .filter((installment) => {
+                        return installment.confirmation === "Confirmed";
+                      })
+                      .reduce(
+                        (sum = 0, installment) => sum + installment.amount,
+                        0
+                      )}
+                  </td>
+                  <td>{details.listingPrice}</td>
+                  <td>{details.listingPrice - paid}</td>
+                </tr>
+                <tr>
+                  <td>
+                    {new Date(details.buying.deposit.paidAt).toLocaleString()}
+                  </td>
+                  <td>Total Pending</td>
+                  <td>
+                    {details.buying.installments
+                      .filter((installment) => {
+                        return installment.confirmation === "Pending";
+                      })
+                      .reduce(
+                        (sum = 0, installment) => sum + installment.amount,
+                        0
+                      )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
-      {info && (
-        <section className="pdf-view">
-          <Document>
-            <Page size="A4" style={styles.page}>
-              <Text style={styles.image}>
-                <img
-                  className="logo-dark"
-                  src="/assets/images/logo/logo-dark.png"
-                  alt="Land Logo"
-                />
-              </Text>
-              <Text style={styles.header}>
-                Entry Billing Info as Of - {new Date(info.date).toDateString()}
-              </Text>
-
-              <View style={styles.nav}>
-                <Text style={styles.h2}>Bills</Text>
-              </View>
-              <View style={styles.records}>
-                <View style={styles.record}>
-                  <Text style={styles.h3}>Rent - </Text>
-                  <Text style={styles.h4}>
-                    Ksh. {info.billing.entry.rent || "Not Billed Yet"}
-                  </Text>
-                </View>
-                <View style={styles.record}>
-                  <Text style={styles.h3}>Deposit - </Text>
-                  <Text style={styles.h4}>
-                    Ksh. {info.billing.entry.deposit || "Not Billed Yet"}
-                  </Text>
-                </View>
-                <View style={styles.record}>
-                  <Text style={styles.h3}>Water -</Text>
-                  <Text style={styles.h4}>
-                    Ksh. {info.billing.entry.water || "Not Billed Yet"}
-                  </Text>
-                </View>
-                <View style={styles.record}>
-                  <Text style={styles.h3}>Electricity -</Text>
-                  <Text style={styles.h5}>
-                    Ksh. {info.billing.entry.electricity || "Not Billed Yet"}
-                  </Text>
-                </View>
-                <View style={styles.record}>
-                  <Text style={styles.h3}>Other -</Text>
-                  <Text style={styles.h5}>
-                    Ksh. {info.billing.entry.other || "Not Billed Yet"}
-                  </Text>
-                </View>
-              </View>
-            </Page>
-          </Document>
-        </section>
+      {details.listingStatus === "Rent" && (
+        <div>
+          <div className="table-custom">
+            <table class="table">
+              <caption>
+                <h2>Entry Payments</h2>
+              </caption>
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Amount Paid</th>
+                  <th scope="col">Amount Billed</th>
+                  <th scope="col">Reference Number</th>
+                  <th scope="col">Confirmation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>
+                    {new Date(details.paidBills.entry.paidAt).toLocaleString()}
+                  </td>
+                  <td>{details.paidBills.entry.total}</td>
+                  <td>
+                    {details.billing.entry.rent +
+                      details.billing.entry.deposit +
+                      details.billing.entry.water +
+                      details.billing.entry.electricity}
+                  </td>
+                  <td>{details.paidBills.entry.refNo}</td>
+                  <td>{details.paidBills.entry.confirmation}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="table-custom">
+            <table class="table">
+              <caption>
+                <h2>Monthly Payments</h2>
+              </caption>
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Reference Number</th>
+                  <th scope="col">Confirmation</th>
+                </tr>
+              </thead>
+              <tbody>
+                {details.paidBills.monthly.map((month) => {
+                  return (
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>
+                        {new Date(
+                          details.paidBills.entry.paidAt
+                        ).toLocaleString()}
+                      </td>
+                      <td>{month.rent}</td>
+                      <td>{month.refNo}</td>
+                      <td>{month.confirmation}</td>
+                      <td>{month.confirmation}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="table-custom">
+            <table class="table">
+              <caption>
+                <h2>Break Down</h2>
+              </caption>
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Total Amount</th>
+                  <th scope="col">Total Billed</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>{new Date().toLocaleDateString()}</td>
+                  <td>Confirmed</td>
+                  <td>
+                    {details.paidBills.monthly
+                      .filter((installment) => {
+                        return installment.confirmation === "Confirmed";
+                      })
+                      .reduce(
+                        (sum = 0, installment) =>
+                          sum +
+                          installment.rent +
+                          installment.water +
+                          installment.electricity,
+                        0
+                      )}
+                  </td>
+                  <td>
+                    {details.billing.monthly.rent +
+                      details.billing.monthly.water +
+                      details.billing.monthly.electricity}
+                  </td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>{new Date().toLocaleDateString()}</td>
+                  <td>Pending</td>
+                  <td>
+                    {details.paidBills.monthly
+                      .filter((installment) => {
+                        return installment.confirmation === "Pending";
+                      })
+                      .reduce(
+                        (sum = 0, installment) =>
+                          sum +
+                          installment.rent +
+                          installment.water +
+                          installment.electricity,
+                        0
+                      )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
     </div>
   );

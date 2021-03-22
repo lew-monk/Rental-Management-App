@@ -78,8 +78,8 @@ const Bookings = () => {
                     <div className="pull-left">
                       <h5 className="property--title">{detail.listingType}</h5>
                       <p className="property--location">
-                        <i className="fa fa-map-marker"></i>Petersham town,
-                        Wardll St - Australia PA 6550
+                        <i className="fa fa-map-marker"></i>Africa Nairobi,
+                        Kenya
                       </p>
                     </div>
                     <div className="pull-right">
@@ -141,41 +141,77 @@ const Bookings = () => {
                 </div>
 
                 <div className="custom-btn">
-                  {detail.rentedBy == null ? (
-                    <button
-                      className="btn btn--primary"
-                      onClick={() => handleRenting(detail._id)}
-                    >
-                      Rent Listing
-                    </button>
-                  ) : (
-                    <button
-                      className="btn"
-                      onClick={() => handleRenting(detail._id)}
-                      disabled={true}
-                    >
-                      Listing Rented
-                    </button>
-                  )}
-                  <Link
-                    className="btn btn--block"
-                    to={`/billing-info/${detail._id}`}
-                    style={{ marginBottom: "1.1rem" }}
-                  >
-                    <button className="btn btn--primary">Check Billing</button>
-                  </Link>
+                  {detail.listingStatus === "Rent" ? (
+                    <div>
+                      {detail.rentedBy == null ? (
+                        <button
+                          className="btn btn--primary"
+                          onClick={() => handleRenting(detail._id)}
+                        >
+                          Rent Listing
+                        </button>
+                      ) : (
+                        <button
+                          className="btn"
+                          onClick={() => handleRenting(detail._id)}
+                          disabled={true}
+                        >
+                          Listing Rented
+                        </button>
+                      )}
+                      <Link
+                        className="btn btn--block"
+                        to={`/billing-info/${detail._id}`}
+                        style={{ marginBottom: "1.1rem" }}
+                      >
+                        <button className="btn btn--primary">
+                          Check Billing
+                        </button>
+                      </Link>
+                      <Link
+                        className="btn btn--block"
+                        to={`/add-monthly-installment/${detail._id}`}
+                        style={{ marginBottom: "1.1rem" }}
+                      >
+                        <button className="btn btn--primary">
+                          Add Payment
+                        </button>
+                      </Link>
 
-                  {detail.rentedBy !== null ? (
-                    <button
-                      className="btn btn--primary"
-                      onClick={() => handleEndLease(detail._id)}
-                    >
-                      End Leasing
-                    </button>
+                      {detail.rentedBy != null ? (
+                        <button
+                          className="btn btn--primary"
+                          onClick={() => handleEndLease(detail._id)}
+                        >
+                          End Leasing
+                        </button>
+                      ) : (
+                        <button className="btn" disabled={true}>
+                          End Leasing
+                        </button>
+                      )}
+                    </div>
                   ) : (
-                    <button className="btn" disabled={true}>
-                      End Leasing
-                    </button>
+                    <div>
+                      <Link
+                        to={`/billing-info/${detail._id}`}
+                        className="btn btn--primary btn--block"
+                        style={{ marginBottom: "0.7rem" }}
+                      >
+                        Check Billing Information
+                      </Link>
+
+                      <Link
+                        to={`/buying/${detail._id}`}
+                        className="btn btn--primary btn--block"
+                      >
+                        Add Payment (Deposit or Installment)
+                      </Link>
+
+                      <button className="btn btn--primary btn--block">
+                        Claim Listing
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>

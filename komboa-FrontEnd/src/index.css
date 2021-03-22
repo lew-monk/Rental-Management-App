@@ -35,3 +35,8 @@ code {
   margin: 0 auto;
   box-shadow: 5px 8px 10px#F2F7FF;
 }
+.table-custom {
+  width: 90vw;
+  margin: 2rem auto;
+  overflow: hidden;
+}

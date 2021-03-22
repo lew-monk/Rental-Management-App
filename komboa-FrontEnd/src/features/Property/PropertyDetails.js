@@ -302,80 +302,8 @@ const PropertyDetails = () => {
 
                   <div className="property-single-reviews inner-box">
                     <div className="row">
-                      <div className="col-xs-12 col-sm-12 col-md-12">
-                        <div className="heading">
-                          <h2 className="heading--title">3 Reviews</h2>
-                        </div>
-                      </div>
                       {/* <!-- .col-md-12 end --> */}
-                      <div className="col-xs-12 col-sm-12 col-md-12">
-                        <ul className="property-review">
-                          <li className="review-comment">
-                            <div className="avatar">R</div>
-                            <div className="comment">
-                              <h6>Ryan Printz</h6>
-                              <div className="date">Feb 12, 2018</div>
-                              <div className="property-rating">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star-o"></i>
-                              </div>
-                              <p>
-                                Lorem ipsum dolor sit amet, consectet
-                                adipisicing elit, sed eiusmod tempor incididun
-                                ut labore dolor magna aliqua enim minim veniam,
-                                quis nostrud.
-                              </p>
-                            </div>
-                          </li>
-                          {/* <!-- comment end --> */}
-                          <li className="review-comment">
-                            <div className="avatar">S</div>
-                            <div className="comment">
-                              <h6>Steve Martin</h6>
-                              <div className="date">Jan 16, 2018</div>
-                              <div className="property-rating">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                              </div>
-                              <p>
-                                Lorem ipsum dolor sit amet, consectet
-                                adipisicing elit, sed eiusmod tempor incididun
-                                ut labore dolor magna aliqua enim minim veniam,
-                                quis nostrud.
-                              </p>
-                            </div>
-                          </li>
-                          {/* <!-- comment end --> */}
-                          <li className="review-comment">
-                            <div className="avatar">N</div>
-                            <div className="comment">
-                              <h6>Nicole Smith</h6>
-                              <div className="date">Nov 25, 2017</div>
-                              <div className="property-rating">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star-o"></i>
-                                <i className="fa fa-star-o"></i>
-                              </div>
-                              <p>
-                                Lorem ipsum dolor sit amet, consectet
-                                adipisicing elit, sed eiusmod tempor incididun
-                                ut labore dolor magna aliqua enim minim veniam,
-                                quis nostrud.
-                              </p>
-                            </div>
-                          </li>
-                          {/* <!-- comment end --> */}
-                        </ul>
-                        {/* <!-- .comments-list end --> */}
-                      </div>
+
                       {/* <!-- .col-md-12 end --> */}
                     </div>
                     {/* <!-- .row end --> */}

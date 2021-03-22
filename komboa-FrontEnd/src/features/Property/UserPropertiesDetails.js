@@ -18,6 +18,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
+import Footer from "../../components/Footer";
 
 const key = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
@@ -335,74 +336,7 @@ const UserPropertiesDetails = () => {
                         </div>
                       </div>
                       {/* <!-- .col-md-12 end --> */}
-                      <div className="col-xs-12 col-sm-12 col-md-12">
-                        <ul className="property-review">
-                          <li className="review-comment">
-                            <div className="avatar">R</div>
-                            <div className="comment">
-                              <h6>Ryan Printz</h6>
-                              <div className="date">Feb 12, 2018</div>
-                              <div className="property-rating">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star-o"></i>
-                              </div>
-                              <p>
-                                Lorem ipsum dolor sit amet, consectet
-                                adipisicing elit, sed eiusmod tempor incididun
-                                ut labore dolor magna aliqua enim minim veniam,
-                                quis nostrud.
-                              </p>
-                            </div>
-                          </li>
-                          {/* <!-- comment end --> */}
-                          <li className="review-comment">
-                            <div className="avatar">S</div>
-                            <div className="comment">
-                              <h6>Steve Martin</h6>
-                              <div className="date">Jan 16, 2018</div>
-                              <div className="property-rating">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                              </div>
-                              <p>
-                                Lorem ipsum dolor sit amet, consectet
-                                adipisicing elit, sed eiusmod tempor incididun
-                                ut labore dolor magna aliqua enim minim veniam,
-                                quis nostrud.
-                              </p>
-                            </div>
-                          </li>
-                          {/* <!-- comment end --> */}
-                          <li className="review-comment">
-                            <div className="avatar">N</div>
-                            <div className="comment">
-                              <h6>Nicole Smith</h6>
-                              <div className="date">Nov 25, 2017</div>
-                              <div className="property-rating">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star-o"></i>
-                                <i className="fa fa-star-o"></i>
-                              </div>
-                              <p>
-                                Lorem ipsum dolor sit amet, consectet
-                                adipisicing elit, sed eiusmod tempor incididun
-                                ut labore dolor magna aliqua enim minim veniam,
-                                quis nostrud.
-                              </p>
-                            </div>
-                          </li>
-                          {/* <!-- comment end --> */}
-                        </ul>
-                        {/* <!-- .comments-list end --> */}
-                      </div>
+
                       {/* <!-- .col-md-12 end --> */}
                     </div>
                     {/* <!-- .row end --> */}
@@ -681,7 +615,7 @@ const UserPropertiesDetails = () => {
                       }}
                     >
                       {/* <!-- .property-item #1 --> */}
-                      {listings.length <= 0 ? (
+                      {listings.length === 0 ? (
                         <div>
                           <h3>No Listings at the moment</h3>
                           <Link
@@ -782,6 +716,7 @@ const UserPropertiesDetails = () => {
       ) : (
         <p>Loading</p>
       )}
+      <Footer />
     </div>
   );
 };

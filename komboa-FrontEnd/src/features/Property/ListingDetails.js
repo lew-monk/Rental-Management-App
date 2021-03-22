@@ -19,6 +19,7 @@ const ListingDetails = () => {
   const [details, setDetails] = useState();
   const [open, setOpen] = useState(false);
   const [openRemove, setOpenRemove] = useState(false);
+  const [openLease, setOpenLease] = useState(false);
   const history = useHistory();
 
   const { id } = useParams();
@@ -48,6 +49,15 @@ const ListingDetails = () => {
       });
   };
 
+  const handleEndLease = () => {
+    axios({
+      method: "PUT",
+      url: `/end-lease/${id}`,
+    })
+      .then((response) => history.goBack())
+      .catch((err) => console.log(err.message));
+  };
+
   const handleOpenDialogue = () => {
     setOpen(true);
   };
@@ -60,6 +70,12 @@ const ListingDetails = () => {
   };
   const handleCloseRemoveDialogue = () => {
     setOpenRemove(false);
+  };
+  const handleOpenLeaseDialogue = () => {
+    setOpenLease(true);
+  };
+  const handleCloseLeaseDialogue = () => {
+    setOpenLease(false);
   };
 
   const handleDeleteProperty = () => {
@@ -806,7 +822,7 @@ const ListingDetails = () => {
                             <Link to="#">
                               <div className="agent--info">
                                 <h5 className="agent--title">
-                                  {details.rentedBy
+                                  {details.rentedBy !== null
                                     ? details.rentedBy.FullName
                                     : "Listing not rented Yet"}
                                 </h5>
@@ -822,7 +838,7 @@ const ListingDetails = () => {
                                 </li>
                                 <li>
                                   <i className="fa fa-envelope-o"></i>
-                                  {details.bookedBy
+                                  {details.rentedBy
                                     ? details.rentedBy.Email
                                     : "No Email Available"}
                                 </li>
@@ -889,14 +905,16 @@ const ListingDetails = () => {
                                   Edit Listing
                                 </Link>
                               </div>
-                              <div className="form-group">
-                                <Link
-                                  to={`/add-billing/${id}`}
-                                  className="btn btn--primary btn--block"
-                                >
-                                  Add Billing
-                                </Link>
-                              </div>
+                              {details.listingStatus === "Rent" && (
+                                <div className="form-group">
+                                  <Link
+                                    to={`/add-billing/${id}`}
+                                    className="btn btn--primary btn--block"
+                                  >
+                                    Add Billing
+                                  </Link>
+                                </div>
+                              )}
                               {details.bookedBy === null ? (
                                 <div className="form-group">
                                   <input
@@ -950,6 +968,67 @@ const ListingDetails = () => {
                                   </Dialog>
                                 </div>
                               )}
+                              {details.rentedBy === null ? (
+                                <div className="form-group">
+                                  <input
+                                    type="button"
+                                    value="End Lease"
+                                    name="submit"
+                                    className="btn btn--primary btn--block"
+                                    disabled
+                                  />
+                                </div>
+                              ) : (
+                                <div className="form-group">
+                                  <input
+                                    type="button"
+                                    value="End Lease"
+                                    name="submit"
+                                    className="btn btn--primary btn--block"
+                                    onClick={handleOpenLeaseDialogue}
+                                  />
+                                  <Dialog
+                                    open={openLease}
+                                    onClose={handleCloseLeaseDialogue}
+                                    aria-labelledby="alert-dialog-title"
+                                    aria-describedby="alert-dialog-description"
+                                  >
+                                    <DialogTitle id="alert-dialog-title">
+                                      {`Are you sure you want to End Lease on this Listing??`}
+                                    </DialogTitle>
+                                    <DialogContent>
+                                      <DialogContentText id="alert-dialog-description">
+                                        Removing this Leasing is unreversable.
+                                        Only the tenant can lease again Please
+                                        Refresh if the Leasing is removed
+                                      </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                      <Button
+                                        onClick={handleEndLease}
+                                        color="primary"
+                                      >
+                                        Remove
+                                      </Button>
+                                      <Button
+                                        onClick={handleCloseLeaseDialogue}
+                                        color="primary"
+                                        autoFocus
+                                      >
+                                        Abort
+                                      </Button>
+                                    </DialogActions>
+                                  </Dialog>
+                                </div>
+                              )}
+                              <div className="form-group">
+                                <Link
+                                  to={`/confirm-payment/${id}`}
+                                  className="btn btn--primary btn--block"
+                                >
+                                  Confirm Payments
+                                </Link>
+                              </div>
                             </form>
                           </div>
                         </div>
